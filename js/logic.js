@@ -122,33 +122,25 @@ L.control.layers(baseMaps, overlayMaps).addTo(myMap);
 // BEGIN ADDING FAULT LINES
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// Neither reading from github url nor from local works.
-// From github url: Access to XMLHttpRequest at 'https://github.com/fraxen/tectonicplates/tree/master/GeoJSON/PB2002_boundaries.json' from origin 'http://localhost:8000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
-// From local: ERROR: Invalid GeoJson format
-// AND from what I found, there's not easy fix for either of the above
-// And I didn't see much instructions on how to do it, at all
-// Maybe you don't really expect any of us to actually do it, do you?
+// GITHUB RAW that's the way!
+url2 = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
+// for the faultlines
+//fetch("tectonicplates-master/GeoJSON/PB2002_boundaries.json")
+//  .then(function(data){
+d3.json(url2, function(data){
+    console.log(typeof(data));
+    L.geoJson(data, {
+      // Style each feature (in this case a region)
+      style: function(feature) {
+        return {
+          color: "white",
 
-
-// url2 = "https://github.com/fraxen/tectonicplates/tree/master/GeoJSON/PB2002_boundaries.json";
-// // for the faultlines
-// //fetch("tectonicplates-master/GeoJSON/PB2002_boundaries.json")
-// //  .then(function(data){
-// d3.json(url2, function(data){
-//     console.log(typeof(data));
-//     L.geoJson(data, {
-//       // Style each feature (in this case a neighborhood)
-//       style: function(feature) {
-//         return {
-//           color: "white",
-//           // Call the chooseColor function to decide which color to color our neighborhood (color based on borough)
-//           fillColor: chooseColor(feature.properties.borough),
-//           fillOpacity: 0.5,
-//           weight: 1.5
-//       }
-//     }
-//     }).addTo(myMap);
-//   });
+          fillOpacity: 0.5,
+          weight: 1.5
+      }
+    }
+    }).addTo(faultlines);
+  });
 
 
 
